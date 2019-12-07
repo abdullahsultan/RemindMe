@@ -14,13 +14,12 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
-        android:layout_marginRight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:clickable="true"
         android:focusable="true"
+        app:fabSize="normal"
         android:backgroundTint="@android:color/holo_green_dark"
         android:src="@drawable/green_plus_big"
-        tools:srcCompat="@tools:sample/avatars" />
+        />
 </LinearLayout>

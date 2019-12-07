@@ -1,5 +1,6 @@
 package com.example.remindme;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String time;
 
     private FloatingActionButton floatingActionButton;
 
@@ -26,11 +29,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(MainActivity.this,Activity_Time_Setting.class);
-                startActivity(intent);
+                startActivityForResult(intent,5);
 
             }
         });
-
-
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 5 && resultCode==1)
+        {
+            time = data.getStringExtra("time");
+            Toast.makeText(this, time, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
+
 }
