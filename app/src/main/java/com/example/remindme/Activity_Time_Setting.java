@@ -171,6 +171,7 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
             public void onClick(View v) {
                 Intent i = new Intent();
                 i.putExtra("time",txtTme.getText().toString());
+                i.putExtra("name",txt_reminderName.getText().toString());
                 setResult(1,i);
                 finish();
 
