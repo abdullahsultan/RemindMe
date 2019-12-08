@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,8 +54,14 @@ public class MainActivity extends AppCompatActivity {
         {
             time = data.getStringExtra("time");
             name = data.getStringExtra("name");
+
+            //Bundle extras = getIntent().getExtras();
+            byte[] byteArray =  data.getByteArrayExtra("picture");                                    //extras.getByteArray("picture");
+
+            Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
             Toast.makeText(this, time, Toast.LENGTH_SHORT).show();
-            Time_Setter t =  new Time_Setter(name,time);
+            Time_Setter t =  new Time_Setter(name,time,bmp);
             arrayList.add(t);
             Adapter_RecyclerView adapter_recyclerView = new Adapter_RecyclerView(this,R.layout.resource_file,arrayList);
             recyclerView.setAdapter(adapter_recyclerView);

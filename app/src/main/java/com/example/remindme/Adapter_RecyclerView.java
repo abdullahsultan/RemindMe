@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class Adapter_RecyclerView extends RecyclerView.Adapter<Adapter_RecyclerV
         Time_Setter time_setter =data.get(position);
         holder.textView_reminderName.setText(time_setter.remind_text);
         holder.textView_TimeRemaining.setText(time_setter.time_remaining_text);
+        holder.imageView.setImageBitmap(time_setter.bitmap);
 
     }
 
@@ -50,11 +52,13 @@ public class Adapter_RecyclerView extends RecyclerView.Adapter<Adapter_RecyclerV
     public class  My_Holder extends RecyclerView.ViewHolder{
         private TextView textView_reminderName;
         private TextView textView_TimeRemaining;
+        private ImageView imageView;
 
         public My_Holder(@NonNull View itemView) {
             super(itemView);
             textView_reminderName = itemView.findViewById(R.id.textView_Reminder);
             textView_TimeRemaining = itemView.findViewById(R.id.textView_remainingTime);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 
