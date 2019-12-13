@@ -2,9 +2,10 @@ package com.example.remindme;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +36,9 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
     private Spinner spinner;
     private ImageView imageView;
     private int year, month, day, hour, minute;
+    private Bitmap bitmap;
     private byte[] byteArray;
+    private Uri uri;
 
 
     @Override
@@ -44,12 +48,13 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
             try {
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
 
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                bitmap = BitmapFactory.decodeStream(inputStream);
                 imageView.setImageBitmap(bitmap);
+                uri = data.getData();
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 20, stream);
-                byteArray = stream.toByteArray();
+                //ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                //bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
+                //byteArray = stream.toByteArray();
 
 
             } catch (FileNotFoundException e) {
@@ -220,7 +225,12 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
                 Intent i = new Intent();
                 i.putExtra("time",txtTme.getText().toString());
                 i.putExtra("name",txt_reminderName.getText().toString());
-                i.putExtra("picture", byteArray);
+                i.putExtra("uri",uri.toString());
+                //Bundle bundle = new Bundle();
+                //bundle.putByteArray("pic",byteArray);
+              //  i.putExtra("picture",bundle);
+               // i.putExtra("picture", byteArray);
+
                 setResult(1,i);
                 finish();
 

@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -56,12 +58,20 @@ public class MainActivity extends AppCompatActivity {
             name = data.getStringExtra("name");
 
             //Bundle extras = getIntent().getExtras();
-            byte[] byteArray =  data.getByteArrayExtra("picture");                                    //extras.getByteArray("picture");
+            //byte[] byteArray =  data.getByteArrayExtra("picture");                                    //extras.getByteArray("picture");
 
-            Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            //Bundle bundle = new Bundle();
+            //bundle = data.getExtras();
+            //bundle = data.getBundleExtra("picture");
+            //byte[] byteArray = bundle.getByteArray("pic");
 
-            Toast.makeText(this, time, Toast.LENGTH_SHORT).show();
-            Time_Setter t =  new Time_Setter(name,time,bmp);
+            //Log.i("CHACH", "onActivityResult: "+byteArray.length);
+            //Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+            String uri = data.getStringExtra("uri");
+            Uri my_uri = Uri.parse(uri);
+            Toast.makeText(this, my_uri.toString(), Toast.LENGTH_LONG).show();
+            Time_Setter t =  new Time_Setter(name,time,my_uri);
             arrayList.add(t);
             Adapter_RecyclerView adapter_recyclerView = new Adapter_RecyclerView(this,R.layout.resource_file,arrayList);
             recyclerView.setAdapter(adapter_recyclerView);

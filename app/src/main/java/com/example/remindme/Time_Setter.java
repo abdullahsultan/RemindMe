@@ -1,17 +1,18 @@
 package com.example.remindme;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.widget.ImageView;
 
 public class Time_Setter {
 
     public String remind_text;
     public String time_remaining_text;
-    public Bitmap bitmap;
+    public Uri uri;
 
-    public Time_Setter(String remind_text, String time_remaining_text, Bitmap bitmap) {
+    public Time_Setter(String remind_text, String time_remaining_text, Uri uri) {
         this.remind_text = remind_text;
         this.time_remaining_text = time_remaining_text;
-        this.bitmap = bitmap;
+        this.uri = uri;
     }
 }
