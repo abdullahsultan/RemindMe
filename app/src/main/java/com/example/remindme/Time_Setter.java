@@ -1,8 +1,6 @@
 package com.example.remindme;
-
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.widget.ImageView;
+
 
 public class Time_Setter {
 

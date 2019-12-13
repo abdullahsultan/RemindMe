@@ -8,13 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -57,16 +53,6 @@ public class MainActivity extends AppCompatActivity {
             time = data.getStringExtra("time");
             name = data.getStringExtra("name");
 
-            //Bundle extras = getIntent().getExtras();
-            //byte[] byteArray =  data.getByteArrayExtra("picture");                                    //extras.getByteArray("picture");
-
-            //Bundle bundle = new Bundle();
-            //bundle = data.getExtras();
-            //bundle = data.getBundleExtra("picture");
-            //byte[] byteArray = bundle.getByteArray("pic");
-
-            //Log.i("CHACH", "onActivityResult: "+byteArray.length);
-            //Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
             String uri = data.getStringExtra("uri");
             Uri my_uri = Uri.parse(uri);

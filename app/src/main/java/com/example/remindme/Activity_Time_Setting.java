@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,12 +14,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -47,16 +42,9 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
         if(requestCode==1 && resultCode==RESULT_OK){
             try {
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
-
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 imageView.setImageBitmap(bitmap);
                 uri = data.getData();
-
-                //ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                //bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
-                //byteArray = stream.toByteArray();
-
-
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -135,6 +123,8 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
                 txt_snooze.setVisibility(View.GONE);
                 txt_repeat.setVisibility(View.GONE);
                 txt_enableAlarm.setVisibility(View.GONE);
+                imageView.setVisibility(View.GONE);
+                btn_PickImage.setVisibility(View.GONE);
             }
         });
 
@@ -163,6 +153,8 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
                 txt_snooze.setVisibility(View.VISIBLE);
                 txt_repeat.setVisibility(View.VISIBLE);
                 txt_enableAlarm.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
+                btn_PickImage.setVisibility(View.VISIBLE);
 
             }
         });
@@ -187,6 +179,8 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
                 txt_snooze.setVisibility(View.GONE);
                 txt_repeat.setVisibility(View.GONE);
                 txt_enableAlarm.setVisibility(View.GONE);
+                imageView.setVisibility(View.GONE);
+                btn_PickImage.setVisibility(View.GONE);
             }
         });
 
@@ -215,6 +209,8 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
                 txt_snooze.setVisibility(View.VISIBLE);
                 txt_repeat.setVisibility(View.VISIBLE);
                 txt_enableAlarm.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
+                btn_PickImage.setVisibility(View.VISIBLE);
 
             }
         });
@@ -226,11 +222,6 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
                 i.putExtra("time",txtTme.getText().toString());
                 i.putExtra("name",txt_reminderName.getText().toString());
                 i.putExtra("uri",uri.toString());
-                //Bundle bundle = new Bundle();
-                //bundle.putByteArray("pic",byteArray);
-              //  i.putExtra("picture",bundle);
-               // i.putExtra("picture", byteArray);
-
                 setResult(1,i);
                 finish();
 
