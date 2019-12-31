@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:text="SELECT DATE"
         android:id="@+id/btn_date"
+        android:drawableLeft="@drawable/ic_date"
         android:layout_below="@+id/in_date"
         android:layout_centerHorizontal="true"
          />
@@ -49,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SELECT TIME"
+        android:drawableLeft="@drawable/ic_time"
         android:id="@+id/btn_time"
         android:layout_below="@+id/in_time"
         android:layout_centerHorizontal="true"
@@ -164,22 +166,25 @@
         android:layout_margin="10dp"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
+        android:src="@drawable/ic_close"
         android:text="Cancel" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:src="@drawable/ic_tick"
         android:layout_margin="10dp"
-        android:text="Add" />
+        android:background="@null"
+         />
 
     <ImageView
         android:id="@+id/imageView"
@@ -196,6 +201,7 @@
         android:layout_margin="10dp"
         android:layout_below="@+id/txt_reminderName"
         android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/ic_image"
         android:text="Pick Image" />
 
 
