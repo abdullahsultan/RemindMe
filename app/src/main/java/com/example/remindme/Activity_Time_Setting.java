@@ -48,6 +48,7 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
     private int year, month, day, hour, minute;
     private Bitmap bitmap;
     private Uri uri;
+    private static final int RQS_PICK_IMAGE = 3;
 
 
 
@@ -78,19 +79,19 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
 
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-            startActivityForResult(Intent.createChooser(intent,"Pick an Image"),1);
+            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            //intent.setType("image/*");
+            startActivityForResult(intent, RQS_PICK_IMAGE);
         }
     }
 
     public  boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
                 return true;
             } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
                 return false;
             }
         }
@@ -147,12 +148,12 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
                 if (Build.VERSION.SDK_INT < 23) {
 
 
-                    if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                         intent.setType("image/*");
                         startActivityForResult(Intent.createChooser(intent,"Pick an Image"),1);
                     }
-                    ActivityCompat.requestPermissions(Activity_Time_Setting.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
+                    ActivityCompat.requestPermissions(Activity_Time_Setting.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
                 }
 
                 else
@@ -164,7 +165,7 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
                         startActivityForResult(Intent.createChooser(intent,"Pick an Image"),1);
                     }
                     else
-                        ActivityCompat.requestPermissions(Activity_Time_Setting.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
+                        ActivityCompat.requestPermissions(Activity_Time_Setting.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
 
                 }
 

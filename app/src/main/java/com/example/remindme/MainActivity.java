@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton.setBackground(getDrawable(R.drawable.green_plus_big));
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
