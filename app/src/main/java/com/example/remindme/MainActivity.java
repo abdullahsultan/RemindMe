@@ -19,7 +19,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String time,name;
+    private String name,repeat;
+    private int day,month,year,hour,minute;
+    private Boolean snooze,alarm;
     private ArrayList<Time_Setter> arrayList = new ArrayList<>();
     private RecyclerView recyclerView;
 
@@ -49,15 +51,29 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 5 && resultCode==1)
         {
-            time = data.getStringExtra("time");
-            name = data.getStringExtra("name");
 
+            name = data.getStringExtra("name");
+            day = data.getIntExtra("day",0);
+            month = data.getIntExtra("month",0);
+            year = data.getIntExtra("year",0);
+            hour = data.getIntExtra("hour",0);
+            minute = data.getIntExtra("minute",0);
+            snooze = data.getBooleanExtra("snooze", false);
+            alarm = data.getBooleanExtra("alarm",false);
+            repeat = data.getStringExtra("repeat");
 
             String uri = data.getStringExtra("uri");
-            Uri my_uri = Uri.parse(uri);
-            Toast.makeText(this, my_uri.toString(), Toast.LENGTH_LONG).show();
-            Time_Setter t =  new Time_Setter(name,time,my_uri);
-            arrayList.add(t);
+            if(uri!=null)
+            {Uri my_uri = Uri.parse(uri);
+            Time_Setter t =  new Time_Setter(name,repeat,my_uri);
+            arrayList.add(t);}
+            else
+            {Time_Setter t =  new Time_Setter(name,repeat);
+                arrayList.add(t);
+            }
+
+
+
             Adapter_RecyclerView adapter_recyclerView = new Adapter_RecyclerView(this,R.layout.resource_file,arrayList);
             recyclerView.setAdapter(adapter_recyclerView);
 

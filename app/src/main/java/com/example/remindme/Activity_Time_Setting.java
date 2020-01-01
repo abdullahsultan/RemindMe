@@ -29,16 +29,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 public class 	Activity_Time_Setting extends AppCompatActivity  {
 
-    private static final int REQUEST_STORAGE_PERMISSION = 1;
-
     private EditText txt_reminderName;
     private Button btnDatePicker, btnTimePicker, btnOK_datePick, btn_ok_timePick,  btn_PickImage;
-    private ImageButton btn_ADD,btn_cancel;
+    private ImageButton btn_ADD, btn_cancel;
     private Switch switch_snooze,switch_alarm;
     private TextView txtDate, txtTme, txt_snooze, txt_repeat, txt_enableAlarm;
     private DatePicker datePicker;
@@ -46,57 +45,33 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
     private Spinner spinner;
     private ImageView imageView;
     private int year, month, day, hour, minute;
-    private Bitmap bitmap;
     private Uri uri;
     private static final int RQS_PICK_IMAGE = 3;
 
 
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
 
-        if(ContextCompat.checkSelfPermission(Activity_Time_Setting.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(Activity_Time_Setting.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},REQUEST_STORAGE_PERMISSION);
-            Toast.makeText(Activity_Time_Setting.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-        }
 
-        if(requestCode==1 && resultCode==RESULT_OK){
-            try {
-                InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                bitmap = BitmapFactory.decodeStream(inputStream);
-                imageView.setImageBitmap(bitmap);
+            if (requestCode == RQS_PICK_IMAGE) {
+
+                imageView.setImageBitmap(null);
+
                 uri = data.getData();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                //String mediaPath = mediaUri.getPath();
+                Toast.makeText(this, uri.toString(), Toast.LENGTH_SHORT).show();
+
+                //display the image
+                try {
+                    InputStream inputStream = getBaseContext().getContentResolver().openInputStream(uri);
+                    Bitmap bm = BitmapFactory.decodeStream(inputStream);
+                    imageView.setImageBitmap(bm);
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-
-            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            //intent.setType("image/*");
-            startActivityForResult(intent, RQS_PICK_IMAGE);
-        }
-    }
-
-    public  boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                return true;
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                return false;
-            }
-        }
-        else { //permission is automatically granted on sdk<23 upon installation
-            return true;
         }
     }
 
@@ -143,32 +118,14 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
         btn_PickImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                if (Build.VERSION.SDK_INT < 23) {
-
-
-                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("image/*");
-                        startActivityForResult(Intent.createChooser(intent,"Pick an Image"),1);
-                    }
-                    ActivityCompat.requestPermissions(Activity_Time_Setting.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+                galleryIntent.setType("image/*");
+                if (galleryIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(Intent.createChooser(galleryIntent, "Select File"), RQS_PICK_IMAGE);
                 }
 
-                else
-                {
-                    if(isStoragePermissionGranted() == true)
-                    {
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("image/*");
-                        startActivityForResult(Intent.createChooser(intent,"Pick an Image"),1);
-                    }
-                    else
-                        ActivityCompat.requestPermissions(Activity_Time_Setting.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_STORAGE_PERMISSION);
-
-                }
-
+                //Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                //startActivityForResult(intent, RQS_PICK_IMAGE);
 
             }
         });
@@ -291,9 +248,24 @@ public class 	Activity_Time_Setting extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
+
+                Boolean alarm = switch_alarm.isChecked();
+                Boolean snooze = switch_snooze.isChecked();
+                String repeat = spinner.getSelectedItem().toString();
+
+                i.putExtra("year",year);
+                i.putExtra("month",month);
+                i.putExtra("day",day);
+                i.putExtra("hour",hour);
+                i.putExtra("minute",minute);
+                i.putExtra("repeat",repeat);
+                i.putExtra("snooze",snooze);
+                i.putExtra("alarm",alarm);
                 i.putExtra("time",txtTme.getText().toString());
+                i.putExtra("date",txtDate.getText().toString());
                 i.putExtra("name",txt_reminderName.getText().toString());
-                i.putExtra("uri",uri.toString());
+                if(uri!=null)
+                    i.putExtra("uri",uri.toString());
                 setResult(1,i);
                 finish();
 
