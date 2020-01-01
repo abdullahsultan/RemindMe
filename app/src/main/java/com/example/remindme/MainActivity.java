@@ -7,15 +7,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,11 +41,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
 
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(MainActivity.this,Activity_Time_Setting.class);
+                Intent  intent = new Intent(MainActivity.this,Activity_Time_Setting.class);
                 startActivityForResult(intent,5);
 
             }
@@ -62,13 +68,23 @@ public class MainActivity extends AppCompatActivity {
             alarm = data.getBooleanExtra("alarm",false);
             repeat = data.getStringExtra("repeat");
 
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR,year);
+            calendar.set(Calendar.DAY_OF_MONTH,day);
+            calendar.set(Calendar.MONTH,month);
+            calendar.set(Calendar.HOUR_OF_DAY,hour);
+            calendar.set(Calendar.MINUTE, minute);
+            calendar.set(Calendar.SECOND,0);
+            long time =  calendar.getTimeInMillis();
+
+
             String uri = data.getStringExtra("uri");
             if(uri!=null)
             {Uri my_uri = Uri.parse(uri);
-            Time_Setter t =  new Time_Setter(name,repeat,my_uri);
+            Time_Setter t =  new Time_Setter(name,repeat,my_uri,time);
             arrayList.add(t);}
             else
-            {Time_Setter t =  new Time_Setter(name,repeat);
+            {Time_Setter t =  new Time_Setter(name,repeat,time);
                 arrayList.add(t);
             }
 
