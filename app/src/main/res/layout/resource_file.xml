@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:layout_toRightOf="@+id/imageView"
-        android:textSize="28dp"
+        android:textSize="22dp"
         android:textStyle="bold"
         android:text="Reminder" />
 
@@ -27,8 +27,7 @@
         android:id="@+id/textView_remainingTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_below="@+id/textView_Reminder"
+        android:layout_below="@+id/imageView"
         android:layout_margin="20dp"
         android:textSize="25dp"
         android:text="TimeLeft" />

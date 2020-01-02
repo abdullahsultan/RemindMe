@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
             String uri = data.getStringExtra("uri");
             if(uri!=null)
             {Uri my_uri = Uri.parse(uri);
-            Time_Setter t =  new Time_Setter(name,repeat,my_uri,time);
+            Time_Setter t =  new Time_Setter(name,repeat,my_uri,time,calendar);
             arrayList.add(t);}
             else
-            {Time_Setter t =  new Time_Setter(name,repeat,time);
+            {Time_Setter t =  new Time_Setter(name,repeat,time,calendar);
                 arrayList.add(t);
             }
 
